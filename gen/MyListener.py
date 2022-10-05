@@ -1,4 +1,4 @@
-# Generated from /Users/rodrigoelyel/Desktop/compiladores/compiladorFinal.g4 by ANTLR 4.10.1
+# Generated from C:/Users/rodri/OneDrive/�rea de Trabalho/Compiladores/Atividade 03\compiladorFinal.g4 by ANTLR 4.10.1
 from antlr4 import *
 if __name__ is not None and "." in __name__:
     from .compiladorFinalParser import compiladorFinalParser
@@ -9,12 +9,13 @@ else:
 class MyListener(ParseTreeListener):
 
     final_result = None
-    initial_expr = 'teste'
+    initial_expr = ''
 
 
     # Enter a parse tree produced by compiladorFinalParser#prog.
     def enterProg(self, ctx:compiladorFinalParser.ProgContext):
-        pass
+        print(ctx.getText())
+        self.initial_expr = ctx.getText()
 
     # Exit a parse tree produced by compiladorFinalParser#prog.
     def exitProg(self, ctx:compiladorFinalParser.ProgContext):
@@ -50,16 +51,23 @@ class MyListener(ParseTreeListener):
 
     # Enter a parse tree produced by compiladorFinalParser#decVars.
     def enterDecVars(self, ctx:compiladorFinalParser.DecVarsContext):
+        print(ctx.TYPE(), ' TYPE')
         pass
 
     # Exit a parse tree produced by compiladorFinalParser#decVars.
     def exitDecVars(self, ctx:compiladorFinalParser.DecVarsContext):
+        # print(ctx., ' getTokens')
         pass
 
 
     # Enter a parse tree produced by compiladorFinalParser#decFunctions.
     def enterDecFunctions(self, ctx:compiladorFinalParser.DecFunctionsContext):
-        pass
+        print(ctx.getTokens() + ' tokens')
+
+        # if (ctx.op.text) == '*':
+        #     ctx.val = ctx.term().val * ctx.factor().val
+        # else:
+        #     ctx.val = ctx.term().val / ctx.factor().val
 
     # Exit a parse tree produced by compiladorFinalParser#decFunctions.
     def exitDecFunctions(self, ctx:compiladorFinalParser.DecFunctionsContext):
@@ -199,6 +207,10 @@ class MyListener(ParseTreeListener):
     # Exit a parse tree produced by compiladorFinalParser#term5.
     def exitTerm5(self, ctx:compiladorFinalParser.Term5Context):
         pass
+        # if (ctx.op.text) == '*':
+        #     ctx.val = ctx.term().val * ctx.factor().val
+        # else:
+        #     ctx.val = ctx.term().val / ctx.factor().val
 
 
     # Enter a parse tree produced by compiladorFinalParser#term6.
