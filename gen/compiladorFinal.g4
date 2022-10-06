@@ -38,15 +38,15 @@ decVars
     ;
 
 decFunctions
-    : DEF ID '(' (TYPE ID (',' TYPE ID)*)? ')' TYPE '{' block '}'
-    | DEF ID '(' (TYPE ID (',' TYPE ID)*)? ')' VOID '{' blockVoid '}'
+    : DEF ID '(' (TYPE ID (',' TYPE ID)*)? ')' TYPE '{' block '}'       #func_type
+    | DEF ID '(' (TYPE ID (',' TYPE ID)*)? ')' VOID '{' blockVoid '}'   #func_void
     ;
 
 func_return
     : RETURN (expr)? ';'
     ;
 
-// For each
+// For
 func_for returns [idx]
     : FOR ID IN RANGE '(' expr ':' expr (':' expr)? ')' '{' block '}'
     ;
@@ -79,53 +79,53 @@ function_call returns [type]
     ;
 
 assigment
-    : ID '=' expr ';'
-    | ID '=' INPUT '()' ';'
+    : ID '=' expr ';'       #assigment_expr
+    | ID '=' INPUT '()' ';' #assigment_input
     ;
 
 expr returns [type, inh_type]
-    : expr OR term
-    | term
+    : expr OR term  #operation_or
+    | term          #go_term
     ;
 
 term returns [type]
-    : term AND term2
-    | term2
+    : term AND term2    #operation_and
+    | term2             #go_term2
     ;
 
 term2 returns [type]
-    : term2 op=('>' | '<' | '<=' | '>=') term3
-    | term3
+    : term2 op=('>' | '<' | '<=' | '>=') term3  #operation_comparation
+    | term3                                     #go_term3
     ;
 
 term3 returns [type]
-    : term3 op=('==' | '!=') term4
-    | term4
+    : term3 op=('==' | '!=') term4  #operation_equal_dif
+    | term4                         #go_term4
     ;
 
 term4 returns [type]
-    : term4 op=('+' | '-') term5
-    | term5
+    : term4 op=('+' | '-') term5    #operation_plus_sub
+    | term5                         #go_term5
     ;
 
 term5 returns [type]
-    : term5 op=('*' | '/') term6
-    | term6
+    : term5 op=('*' | '/') term6    #operation_multi_div
+    | term6                         #go_term6
     ;
 
 term6 returns [type]
-    : op=('-' | NOT) term6
-    | factor
+    : op=('-' | NOT) term6  #operation_minus_not
+    | factor                #go_factor
     ;
 
 factor  returns [type]
-    : '(' expr ')'
-    | function_call
-    | ID
-    | INT_VALUE
-    | FLOAT_VALUE
-    | STR_VALUE
-    | BOOL_VALUE
+    : '(' expr ')'   #terminal_openClose_expr
+    | ID             #terminal_id
+    | INT            #terminal_int
+    | FLOAT          #terminal_float
+    | STRING         #terminal_string
+    | BOOLEAN        #terminal_boolean
+    | function_call  #terminal_function_call
     ;
 
 // P.R.
@@ -159,10 +159,10 @@ INPUT: 'input';
 RANGE: 'range';
 
 //Valores
-INT_VALUE: [0-9]+;
-FLOAT_VALUE: [0-9]+[.][0-9]+;
-STR_VALUE: ["]~["]*["];
-BOOL_VALUE: 'True' | 'False';
+INT: [0-9]+;
+FLOAT: [0-9]+[.][0-9]+;
+STRING: ["]~["]*["];
+BOOLEAN: 'True' | 'False';
 
 //ID
 ID: [a-zA-Z][a-zA-Z0-9]*;
