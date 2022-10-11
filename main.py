@@ -3,9 +3,9 @@ from tkinter import *
 
 from gen.compiladorFinalLexer import compiladorFinalLexer
 from gen.compiladorFinalParser import compiladorFinalParser
-from gen.MyListener import MyListener
-
+from gen.compiladorFinalListener import compiladorFinalListener
 if __name__ == '__main__':
+
     def Take_input():
         INPUT = inputtxt.get("1.0", "end-1c")
         data = InputStream(INPUT)
@@ -19,19 +19,19 @@ if __name__ == '__main__':
         tree = parser.prog()
 
         # Listener
-        listener = MyListener()
+        listener = compiladorFinalListener()
         walker = ParseTreeWalker()
         walker.walk(listener, tree)
 
-        Output.insert(END, '\n')
-        Output.insert(END, 'Expressão --> {}\n'.format(listener.initial_expr))
-        Output.insert(END, 'Resultado --> {}\n'.format(listener.final_result))
-        Output.insert(END, '\n----------------------------------------------\n')
+        # Output.insert(END, '\n')
+        # Output.insert(END, 'Expressão --> {}\n'.format(listener.initial_expr))
+        # Output.insert(END,  'Resultado --> {}\n'.format(listener.final_result))
+        # Output.insert(END, '\n----------------------------------------------\n')
 
 
     root = Tk()
     root.geometry("800x800")
-    root.title(" Compilador final")
+    root.title(" Atividade 04 ")
 
     l = Label(text="Digite seu código ")
     inputtxt = Text(root, height=10,
@@ -44,7 +44,7 @@ if __name__ == '__main__':
 
     Display = Button(root, height=2,
                      width=20,
-                     text="Run",
+                     text="Calcular",
                      command=lambda: Take_input())
 
     l.pack()
